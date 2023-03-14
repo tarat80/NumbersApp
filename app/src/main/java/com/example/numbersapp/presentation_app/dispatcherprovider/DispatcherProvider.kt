@@ -2,6 +2,7 @@ package com.example.numbersapp.presentation_app.dispatcherprovider
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 interface DispatcherProvider {
 
@@ -12,7 +13,7 @@ interface DispatcherProvider {
     val default: CoroutineDispatcher
 }
 
-class DefaultDispatcherProvider : DispatcherProvider {
+class DefaultDispatcherProvider @Inject constructor() : DispatcherProvider {
 
     override val main: CoroutineDispatcher
         get() = Dispatchers.Main

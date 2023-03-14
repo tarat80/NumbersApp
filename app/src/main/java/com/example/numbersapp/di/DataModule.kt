@@ -4,8 +4,6 @@ import android.app.Application
 import androidx.room.Room
 import com.example.numbersapp.data.local.NumbersDataBase
 import com.example.numbersapp.data.remote.NumbersAPI
-import com.example.numbersapp.data.repository.RepositoryImpl
-import com.example.numbersapp.domain.Repository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -39,13 +37,4 @@ object DataModule {
             .fallbackToDestructiveMigration()
             .build()
     }
-    @Provides
-    @Singleton
-    fun provideRepository(
-        api: NumbersAPI,
-        db: NumbersDataBase
-    ) : Repository {
-        return RepositoryImpl( api, db )
-    }
-
 }
