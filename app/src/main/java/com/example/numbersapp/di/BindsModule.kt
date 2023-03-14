@@ -11,15 +11,15 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class BindsModule {
+interface BindsModule {
     @Binds
-    abstract fun bindRepository(
+    fun bindRepository(
         repositoryImpl:
         RepositoryImpl
     ): Repository
 
     @Binds
-    abstract fun bindDispatcher(
+    fun bindDispatcher(
         defaultDispatcherProvider:
         DefaultDispatcherProvider
     ): DispatcherProvider
