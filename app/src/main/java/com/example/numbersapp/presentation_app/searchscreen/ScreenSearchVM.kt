@@ -27,25 +27,27 @@ class ScreenSearchVM @Inject constructor(
 
         string.map { symbol-> if (possible.contains(symbol.toString())) temp += symbol }
 
-        _state.value = _state.value.copy(searchString = temp)
+        _state.update { it.copy(searchString = temp)}
     }
     fun getByNumber() {
         joBa?.cancel()
         joBa = viewModelScope.launch(dispatcherList.main()) {
             repository.getNumberInfo(_state.value.searchString)
-                          .flowOn(dispatcherList.io()).onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        result.data?.let { _state.value = _state.value.copy(numbersAndMeans = it) }
+                .flowOn(dispatcherList.io()).onEach { result ->
+                    when (result) {
+                        is Resource.Success -> {
+                            result.data?.let {
+                                _state.value = _state.value.copy(numbersAndMeans = it)
+                            }
+                        }
+                        is Resource.Loading -> {
+                            _state.update { it.copy(isLoading = result.isLoading) }
+                        }
+                        is Resource.Error -> {
+                            _state.update { it.copy(errorMessage = result.message) }
+                        }
                     }
-                    is Resource.Loading -> {
-                        _state.value = _state.value.copy(isLoading = result.isLoading)
-                    }
-                    is Resource.Error -> {
-                        _state.value = _state.value.copy(errorMessage = result.message)
-                    }
-                }
-            }.launchIn(this)
+                }.launchIn(this)
         }
     }
     fun errorHaveRead() {
