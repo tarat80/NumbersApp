@@ -4,13 +4,12 @@ import app.cash.turbine.test
 import com.example.numbersapp.domain.Repository
 import com.example.numbersapp.domain.model.NumberInfo
 import com.example.numbersapp.domain.model.Resource
-import com.example.numbersapp.presentation_app.dispatcherprovider.DispatcherProvider
+import com.example.numbersapp.presentation_app.dispatcherlist.DispatcherList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
-
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -22,7 +21,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class ScreenSearchVMTest {
 
-    private lateinit var dispatcherProvider: DispatcherProvider
+    private lateinit var dispatcherProvider: DispatcherList
 
     @Mock
     private lateinit var repository: Repository

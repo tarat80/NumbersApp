@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.numbersapp.domain.Repository
 import com.example.numbersapp.domain.model.Resource
-import com.example.numbersapp.presentation_app.dispatcherprovider.DispatcherProvider
+import com.example.numbersapp.presentation_app.dispatcherlist.DispatcherList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -13,17 +13,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ScreenSearchVM @Inject constructor(
     private val repository: Repository,
-    private val dispatcherProvider: DispatcherProvider
+    private val dispatcherList: DispatcherList
 ) : ViewModel() {
 
     private var joBa: Job? = null
 
     private val _state = MutableStateFlow(StateSSearch())
     val state = _state.asStateFlow()
-
-  /*  init{
-        getByNumber()
-    }*/
 
     fun searchChanged(string: String) {
         val possible = setOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9")
@@ -35,9 +31,9 @@ class ScreenSearchVM @Inject constructor(
     }
     fun getByNumber() {
         joBa?.cancel()
-        joBa = viewModelScope.launch(dispatcherProvider.main) {
+        joBa = viewModelScope.launch(dispatcherList.main()) {
             repository.getNumberInfo(_state.value.searchString)
-                          .flowOn(dispatcherProvider.io).onEach { result ->
+                          .flowOn(dispatcherList.io()).onEach { result ->
                 when (result) {
                     is Resource.Success -> {
                         result.data?.let { _state.value = _state.value.copy(numbersAndMeans = it) }

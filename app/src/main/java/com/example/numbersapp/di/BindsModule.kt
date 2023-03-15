@@ -2,8 +2,7 @@ package com.example.numbersapp.di
 
 import com.example.numbersapp.data.repository.RepositoryImpl
 import com.example.numbersapp.domain.Repository
-import com.example.numbersapp.presentation_app.dispatcherprovider.DefaultDispatcherProvider
-import com.example.numbersapp.presentation_app.dispatcherprovider.DispatcherProvider
+import com.example.numbersapp.presentation_app.dispatcherlist.DispatcherList
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,8 +18,7 @@ interface BindsModule {
     ): Repository
 
     @Binds
-    fun bindDispatcher(
-        defaultDispatcherProvider:
-        DefaultDispatcherProvider
-    ): DispatcherProvider
+    fun bindDispatchers(
+        base: DispatcherList.Base
+    ): DispatcherList
 }
