@@ -1,6 +1,7 @@
 package com.example.numbersapp.data.repository
 
 import com.example.numbersapp.data.local.EntityNumber
+import com.example.numbersapp.data.local.MapperDataToDomain
 import com.example.numbersapp.data.local.NumbersDataBase
 import com.example.numbersapp.data.remote.NumbersAPI
 import com.example.numbersapp.domain.Repository
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(
     private val numbersAPI: NumbersAPI,
-    private val numbersDataBase: NumbersDataBase
+    private val numbersDataBase: NumbersDataBase,
+    private val mapper: MapperDataToDomain
 ) : Repository {
 
     override suspend fun getNumberInfo(number: String): Flow<Resource<List<NumberInfo>>> {
@@ -36,7 +38,7 @@ class RepositoryImpl @Inject constructor(
                         number = data.substringBefore(" ")
                     )
                 )
-                val temp = dao.getAll().map { it.toNumberInfo() }
+                val temp = dao.getAll().map { it.map(mapper) }
                 emit(Resource.Success(temp))
 
             } catch (e: HttpException) {

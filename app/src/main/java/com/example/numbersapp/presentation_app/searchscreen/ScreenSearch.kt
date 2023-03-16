@@ -28,9 +28,11 @@ fun ScreenSearch(
         Alignment.Center
     ) {
         if (stt.value.isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                Modifier.fillMaxWidth(0.5f)
+                    .aspectRatio(1f)
+            )
         }
-
         stt.value.errorMessage?.let { errOr ->
             AlertDialog(
                 onDismissRequest = vm::errorHaveRead,
@@ -45,12 +47,10 @@ fun ScreenSearch(
             )
         }
     }
-
     Column(
         Modifier.fillMaxSize(),
         Arrangement.Top,
         Alignment.CenterHorizontally
-
     ) {
         Spacer(modifier = Modifier.height(18.dp))
 
@@ -85,7 +85,6 @@ fun ScreenSearch(
             horizontalAlignment = Alignment.Start
         ) {
             items(stt.value.numbersAndMeans.size) { index ->
-
                 Item(
                     numberInfo = stt.value.numbersAndMeans[index]
                 )
