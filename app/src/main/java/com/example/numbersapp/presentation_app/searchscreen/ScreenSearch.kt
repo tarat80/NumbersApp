@@ -18,7 +18,7 @@ import com.example.numbersapp.R
 
 @Composable
 fun ScreenSearch(
-     vm: ScreenSearchVM = hiltViewModel()
+    vm: ScreenSearchVM = hiltViewModel()
 ) {
 
     val stt = vm.state.collectAsStateWithLifecycle()
@@ -29,8 +29,7 @@ fun ScreenSearch(
     ) {
         if (stt.value.isLoading) {
             CircularProgressIndicator(
-                Modifier.fillMaxWidth(0.5f)
-                    .aspectRatio(1f)
+                Modifier.size(200.dp)
             )
         }
         stt.value.errorMessage?.let { errOr ->
